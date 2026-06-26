@@ -176,38 +176,119 @@
 
 # ------------------------------Workflow Triggers------------------------------
 
-name: Complete Trigger Demo
+# name: Complete Trigger Demo
 
-on: 
-    push:
-        branches:
-            - main
+# on: 
+#     push:
+#         branches:
+#             - main
 
-    pull_request:
-        branches:
-            - main
+#     pull_request:
+#         branches:
+#             - main
 
-    workflow_dispatch:
+#     workflow_dispatch:
     
-    schedule:
-        - cron: "0 0 * * *"
+#     schedule:
+#         - cron: "0 0 * * *"
 
+
+# jobs:
+#     demo:
+#         runs-on: ubuntu-latest 
+
+#         steps:
+#             - name: Trigger Demo
+#               run: |
+#                 echo "Work Flow Started!"
+#                 echo "Current Date"
+#                 date
+#                 echo "Current user"
+#                 whoami
+#                 echo "Current Dirc"
+#                 pwd
+
+
+
+# ------------------------------Branch Filters------------------------------
+# name: Branch Filter
+
+# on: 
+#     push:
+#         branches:
+#             - feature/*
+
+# jobs:
+#     demo:
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Branch Filters
+#               run: echo "Feature branch detected!"
+
+# ------------------------------Branch Ignore------------------------------
+# name: Branch Ignore
+
+
+# on:
+#     push:
+#         branches-ignore:
+#             - experimental
+
+# jobs:
+#     demo:
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Branch Ignore
+#               run: echo "Branch Ignore Successfully!"
+
+# ------------------------------Path Filters------------------------------
+# name: Path Filters
+
+
+# on:
+#     push:
+#         paths:            (Instead of checking the branch, GitHub checks which files changed.)
+#             - src/**       (Only run if something inside: src/** changes)
+
+# jobs:
+#     demo:
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Branch Ignore
+#               run: echo "Branch Ignore Successfully!"
+
+# ------------------------------Path Ignore------------------------------
+# name: Path Ignore
+
+
+# on:
+#     push:
+#         paths-ignore:
+#             - README.md
+#             - docs/**
+# jobs:
+#     demo:
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Branch Ignore
+#               run: echo "Branch Ignore Successfully!"
+
+# ------------------------------Expressions & GitHub Contexts (${{ }})------------------------------
+#                1. github.actor
+
+name: Actor Demo
+
+on:
+    workflow_dispatch
 
 jobs:
     demo:
-        runs-on: ubuntu-latest 
+        runs-on: ubuntu-latest
 
         steps:
-            - name: Trigger Demo
-              run: |
-                echo "Work Flow Started!"
-                echo "Current Date"
-                date
-                echo "Current user"
-                whoami
-                echo "Current Dirc"
-                pwd
-
-
-
-
+            - name: Print Actor
+              run: echo "Actor: ${{ github.actor }}"
