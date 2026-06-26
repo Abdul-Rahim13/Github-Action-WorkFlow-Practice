@@ -110,65 +110,104 @@
 
 # ------------------------------Job Dependencies (needs)------------------------------
 
-name: Needs Demo
+# name: Software Pipeline
+
+# on: 
+#     push:
+#         branches:
+#             - main
+
+# jobs:
+
+#     Compile:
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Compile Project
+#               run: 
+#                 echo "Compiling Project....."
+#                 sleep 8
+#                 echo "Project Compliled!"
+
+#     Unit_Tests:
+#         needs: Compile
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Unit Test
+#               run:
+#                 echo "Unit Testing....."
+#                 sleep 5
+#                 echo "Unit Testing Completed!"
+
+#     Integeration_tests:
+#         needs: Unit_Tests
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Integeration Test
+#               run:
+#                 echo "Integeration Testing....."
+#                 sleep 3
+#                 echo "Integeration Testing Completed!"
+
+#     Package:
+#         needs: Integeration_tests
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Package 
+#               run:
+#                 echo "Packaging...."
+#                 sleep 2
+#                 echo "Packaging Completed!"
+
+#     Deploy:
+#         needs: Package
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Deploy 
+#               run:
+#                 echo "Deploying...."
+#                 sleep 1
+#                 echo "Deploying Completed!"
+
+
+# ------------------------------Workflow Triggers------------------------------
+
+name: Complete Trigger Demo
 
 on: 
     push:
         branches:
             - main
 
+    pull_request:
+        branches:
+            - main
+
+    workflow_dispatch:
+    
+    schedule:
+        - cron: "0 0 * * *"
+
+
 jobs:
-
-    Compile:
-        runs-on: ubuntu-latest
-
-        steps:
-            - name: Compile Project
-              run: 
-                echo "Compiling Project....."
-                sleep 8
-                echo "Project Compliled!"
-
-    Unit_Tests:
-        needs: Compile
-        runs-on: ubuntu-latest
+    demo:
+        runs-on: ubuntu-latest 
 
         steps:
-            - name: Unit Test
-              run:
-                echo "Unit Testing....."
-                sleep 5
-                echo "Unit Testing Completed!"
+            - name: Trigger Demo
+              run: |
+                echo "Work Flow Started!"
+                echo "Current Date"
+                date
+                echo "Current user"
+                whoami
+                echo "Current Dirc"
+                pwd
 
-    Integeration_tests:
-        needs: Unit_Tests
-        runs-on: ubuntu-latest
 
-        steps:
-            - name: Integeration Test
-              run:
-                echo "Integeration Testing....."
-                sleep 3
-                echo "Integeration Testing Completed!"
 
-    Package:
-        needs: Integeration_tests
-        runs-on: ubuntu-latest
 
-        steps:
-            - name: Package 
-              run:
-                echo "Packaging...."
-                sleep 2
-                echo "Packaging Completed!"
-
-    Deploy:
-        needs: Package
-        runs-on: ubuntu-latest
-
-        steps:
-            - name: Deploy 
-              run:
-                echo "Deploying...."
-                sleep 1
-                echo "Deploying Completed!"
