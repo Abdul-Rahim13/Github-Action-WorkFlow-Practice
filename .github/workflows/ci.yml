@@ -6,12 +6,17 @@ on:
             - main
 
 env:
-    COURSE: GitHub Actions
+    NAME: Abdul Rahim
+    AGE: 23
+    CITY: Lahore
+    COUNTRY: Pakistan
+    COURSE: DevOps
 
 jobs: 
     demo:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Print Course
-              run: echo "Learning $COURSE"
+            - name: Global Variables
+              run: 
+                echo "My name is $NAME. I am $AGE years old. I belongs to $CITY and my country is $COUNTRY. I am learning $COURSE"
