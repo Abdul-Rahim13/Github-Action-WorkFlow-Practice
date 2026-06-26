@@ -11,14 +11,15 @@ jobs:
 
         steps:
             - name: Run Multiple Linux Commands
-              run: echo echo "Current Directory:" 
-                   pwd
+              run: 
+                echo echo "Current Directory:" 
+                pwd
 
-                   echo "Current Date:"
-                   date
+                echo "Current Date:"
+                date
 
-                   echo "Current User:"
-                   whoami
+                echo "Current User:"
+                whoami
 
-                   echo "Hostname:"
-                   hostname
+                echo "Hostname:"
+                hostname
