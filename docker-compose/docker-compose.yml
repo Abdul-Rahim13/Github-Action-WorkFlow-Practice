@@ -1,0 +1,19 @@
+servicces:
+    db:
+      image: mysql:8
+      contianer_name: mysql_db
+      restart: unless-stopped
+      environments:
+        MYSQL_ROOT_PASSWORD: root123
+        MYSQL_DATABASE: mydb
+      volumes:
+        - mysql_data:/var/lib/mysql 
+      networks:
+        - mysql_network
+      
+    phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      contianer_name: phpmyadmin_ui
+      restart: unless-stopped
+      environments:
+        PMA_HOST: db
