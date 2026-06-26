@@ -24,86 +24,129 @@
 
 # ------------------------------MULTIPLE JOBS ------------------------------
 
-name: Office Simulation
+# name: Office Simulation
 
-on:
+# on:
+#     push:
+#         branches:
+#             - main
+
+# jobs:
+#     Manager:
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Manager Role
+#               run: echo "Coordinates the team, timelines, and business goals to ensure the product launches successfully."
+
+#             - name: Date
+#               run: date
+
+#             - name: Current Direc
+#               run: pwd
+            
+#             - name: Hostname
+#               run: whoami
+#     Developer:
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Developer Role
+#               run: echo "They are the builders who translate designs into functional software "
+
+#             - name: Date
+#               run: date
+
+#             - name: Current Direc
+#               run: pwd
+            
+#             - name: Hostname
+#               run: whoami
+#     Tester:
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Tester Role
+#               run: echo "Dedicated to quality assurance, ensuring the application works as intended and is reliable ."
+
+#             - name: Date
+#               run: date
+
+#             - name: Current Direc
+#               run: pwd
+            
+#             - name: Hostname
+#               run: whoami
+#     Designer:
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Designer Role
+#               run: echo "Focuses on how the software looks, feels, and solves problems for the user."
+
+#             - name: Date
+#               run: date
+
+#             - name: Current Direc
+#               run: pwd
+            
+#             - name: Hostname
+#               run: whoami
+#     DevOps:
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: DevOps Role
+#               run: echo "The bridge between software development and IT operations, focused on deployment, automation, and system reliability."
+
+#             - name: Date
+#               run: date
+
+#             - name: Current Direc
+#               run: pwd
+            
+#             - name: Hostname
+#               run: whoami
+
+# ------------------------------Job Dependencies (needs)------------------------------
+
+name: Needs Demo
+
+on: 
     push:
         branches:
             - main
 
 jobs:
-    Manager:
+
+    build:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Manager Role
-              run: echo "Coordinates the team, timelines, and business goals to ensure the product launches successfully."
+            - name: Build Project
+              run: 
+                echo "Building Project....."
+                sleep 5
+                echo "Build completed!"
 
-            - name: Date
-              run: date
+    test:
+        needs: build
+        runs-on: ubuntu-latest
 
-            - name: Current Direc
-              run: pwd
-            
-            - name: Hostname
-              run: whoami
-    Developer:
+        steps: 
+            - name: Run Tests
+              run: 
+                echo "Running tests..."
+                sleep 3
+                echo "All tests passed!"
+
+    deploy:
+        needs: test
         runs-on: ubuntu-latest
 
         steps:
-            - name: Developer Role
-              run: echo "They are the builders who translate designs into functional software "
-
-            - name: Date
-              run: date
-
-            - name: Current Direc
-              run: pwd
-            
-            - name: Hostname
-              run: whoami
-    Tester:
-        runs-on: ubuntu-latest
-
-        steps:
-            - name: Tester Role
-              run: echo "Dedicated to quality assurance, ensuring the application works as intended and is reliable ."
-
-            - name: Date
-              run: date
-
-            - name: Current Direc
-              run: pwd
-            
-            - name: Hostname
-              run: whoami
-    Designer:
-        runs-on: ubuntu-latest
-
-        steps:
-            - name: Designer Role
-              run: echo "Focuses on how the software looks, feels, and solves problems for the user."
-
-            - name: Date
-              run: date
-
-            - name: Current Direc
-              run: pwd
-            
-            - name: Hostname
-              run: whoami
-    DevOps:
-        runs-on: ubuntu-latest
-
-        steps:
-            - name: DevOps Role
-              run: echo "The bridge between software development and IT operations, focused on deployment, automation, and system reliability."
-
-            - name: Date
-              run: date
-
-            - name: Current Direc
-              run: pwd
-            
-            - name: Hostname
-              run: whoami
+            - name: Deploy Application
+              run: 
+               echo "Deploying..."
+               sleep 2
+               echo "Deployment successful!"
