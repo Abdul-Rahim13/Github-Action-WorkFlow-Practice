@@ -19,4 +19,4 @@ jobs:
             - name: Show Current Directory
               run:  pwd
             - name : List Files
-              run: ls- la
+              run: ls -la
