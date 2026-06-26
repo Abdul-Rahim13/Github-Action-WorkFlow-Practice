@@ -280,6 +280,36 @@
 # ------------------------------Expressions & GitHub Contexts (${{ }})------------------------------
 #                1. github.actor
 
+# name: Actor Demo
+
+# on:
+#     workflow_dispatch:
+
+# jobs:
+#     demo:
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Print Actor
+#               run: 'echo "Actor: ${{ github.actor  }}"'
+
+#                2. github.repository
+
+# name: Actor Demo
+
+# on:
+#     workflow_dispatch:
+
+# jobs:
+#     demo:
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Print Actor
+#               run: 'echo "Actor: ${{ github.repository  }}"'
+
+#                2. github.ref
+
 name: Actor Demo
 
 on:
@@ -291,4 +321,4 @@ jobs:
 
         steps:
             - name: Print Actor
-              run: 'echo "Actor: ${{ github.actor  }}"'
+              run: 'echo "Actor: ${{ github.ref  }}"'
