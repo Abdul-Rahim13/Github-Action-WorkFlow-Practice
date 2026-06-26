@@ -118,17 +118,7 @@ on:
             - main
 
 jobs:
-
-    build:
-        runs-on: ubuntu-latest
-
-        steps:
-            - name: Build Project
-              run: 
-                echo "Building Project....."
-                sleep 5
-                echo "Build completed!"
-
+    
     test:
         needs: build
         runs-on: ubuntu-latest
