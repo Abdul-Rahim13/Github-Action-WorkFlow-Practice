@@ -56,4 +56,4 @@ jobs:
               run: whoami
 
             - name: Job2 Step3
-              run: hostname
+              run: pwd
