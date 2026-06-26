@@ -1,14 +1,16 @@
-name: Different Triggers Demo
+name: Local Variable Practice
 
 on:
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  variables:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Print Message
-              run: echo "Workflow triggered successfully!"
+    steps:
+      - name: Create and Print Variable
+        run: |
+          NAME=Rahim
+          echo "Hello $NAME"
