@@ -1,18 +1,24 @@
-name: Different Triggers Demo
+name: Multiple Commands
 
-on:
+on :
     push:
-    
-    pull_request:
-    
-    workflow_dispatch:
+        branches:
+            - main
 
-jobs:
-    build:
+jobs: 
+    linux-commands:
         runs-on: ubuntu-latest
-    
+
         steps:
-            - name: Print Message
-              run: echo "Workflow triggered successfully!"
-            - name: Print 2 Message
-              run: echo "PR Mesg + Dev Branch"
+            - name: Run Multiple Linux Commands
+              run: echo echo "Current Directory:" 
+                   pwd
+
+                   echo "Current Date:"
+                   date
+
+                   echo "Current User:"
+                   whoami
+
+                   echo "Hostname:"
+                   hostname
