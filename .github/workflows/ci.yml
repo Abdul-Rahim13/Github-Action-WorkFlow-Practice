@@ -1,22 +1,59 @@
-name: Global Environment Variable
+# name: Global Environment Variable
+
+# on:
+#     push:
+#         branches:
+#             - main
+
+# env:
+#     NAME: Abdul Rahim
+#     AGE: 23
+#     CITY: Lahore
+#     COUNTRY: Pakistan
+#     COURSE: DevOps
+
+# jobs: 
+#     demo:
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Global Variables
+#               run: 
+#                 echo "My name is $NAME. I am $AGE years old. I belongs to $CITY and my country is $COUNTRY. I am learning $COURSE"
+
+
+# ------------------------------MULTIPLE JOBS ------------------------------
+
+name: Multiple Jobs Demo
 
 on:
     push:
         branches:
             - main
 
-env:
-    NAME: Abdul Rahim
-    AGE: 23
-    CITY: Lahore
-    COUNTRY: Pakistan
-    COURSE: DevOps
-
-jobs: 
-    demo:
+jobs:
+    job1:
         runs-on: ubuntu-latest
-
+        
         steps:
-            - name: Global Variables
-              run: 
-                echo "My name is $NAME. I am $AGE years old. I belongs to $CITY and my country is $COUNTRY. I am learning $COURSE"
+            - name: Job1 Step1
+              run: echo "Hello from Job 1"
+
+            - name: Job1 Step2
+              run: date
+
+            - name: Job1 Step3
+              run: pwd
+
+    job2:
+        runs-on: ubuntu-latest
+        
+        steps:
+            - name: Job2 Step1
+              run: echo "Hello from Job 2"
+
+            - name: Job2 Step2
+              run: whoami
+
+            - name: Job2 Step3
+              run: hostname
