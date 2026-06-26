@@ -1,16 +1,17 @@
-name: Local Variable Practice
+name: Global Environment Variable
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
-jobs:
-  variables:
-    runs-on: ubuntu-latest
+env:
+    COURSE: GitHub Actions
 
-    steps:
-      - name: Create and Print Variable
-        run: |
-          NAME=Rahim
-          echo "Hello $NAME"
+jobs: 
+    demo:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Print Course
+              run: echo "Learning $COURSE"
