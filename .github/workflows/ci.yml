@@ -24,7 +24,7 @@
 
 # ------------------------------MULTIPLE JOBS ------------------------------
 
-name: Multiple Jobs Demo
+name: Office Simulation
 
 on:
     push:
@@ -32,28 +32,78 @@ on:
             - main
 
 jobs:
-    job1:
+    Manager:
         runs-on: ubuntu-latest
-        
-        steps:
-            - name: Job1 Step1
-              run: echo "Hello from Job 1"
 
-            - name: Job1 Step2
+        steps:
+            - name: Manager Role
+              run: echo "Coordinates the team, timelines, and business goals to ensure the product launches successfully."
+
+            - name: Date
               run: date
 
-            - name: Job1 Step3
+            - name: Current Direc
               run: pwd
-
-    job2:
-        runs-on: ubuntu-latest
-        
-        steps:
-            - name: Job2 Step1
-              run: echo "Hello from Job 2"
-
-            - name: Job2 Step2
+            
+            - name: Hostname
               run: whoami
+    Developer:
+        runs-on: ubuntu-latest
 
-            - name: Job2 Step3
+        steps:
+            - name: Developer Role
+              run: echo "They are the builders who translate designs into functional software "
+
+            - name: Date
+              run: date
+
+            - name: Current Direc
               run: pwd
+            
+            - name: Hostname
+              run: whoami
+    Tester:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Tester Role
+              run: echo "Dedicated to quality assurance, ensuring the application works as intended and is reliable ."
+
+            - name: Date
+              run: date
+
+            - name: Current Direc
+              run: pwd
+            
+            - name: Hostname
+              run: whoami
+    Designer:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Designer Role
+              run: echo "Focuses on how the software looks, feels, and solves problems for the user."
+
+            - name: Date
+              run: date
+
+            - name: Current Direc
+              run: pwd
+            
+            - name: Hostname
+              run: whoami
+    DevOps:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: DevOps Role
+              run: echo "The bridge between software development and IT operations, focused on deployment, automation, and system reliability."
+
+            - name: Date
+              run: date
+
+            - name: Current Direc
+              run: pwd
+            
+            - name: Hostname
+              run: whoami
