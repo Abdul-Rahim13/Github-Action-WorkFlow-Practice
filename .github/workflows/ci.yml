@@ -118,25 +118,57 @@ on:
             - main
 
 jobs:
-    
-    test:
-        needs: build
-        runs-on: ubuntu-latest
 
-        steps: 
-            - name: Run Tests
-              run: 
-                echo "Running tests..."
-                sleep 3
-                echo "All tests passed!"
-
-    deploy:
-        needs: test
+    Compile:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Deploy Application
+            - name: Compile Project
               run: 
-               echo "Deploying..."
-               sleep 2
-               echo "Deployment successful!"
+                echo "Compiling Project....."
+                sleep 8
+                echo "Project Compliled!"
+
+    Unit_Tests:
+        needs: Compile
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Unit Test
+              run:
+                echo "Unit Testing....."
+                sleep 5
+                echo "Unit Testing Completed!"
+
+    Integeration_tests:
+        needs: Unit_Tests
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Integeration Test
+              run:
+                echo "Integeration Testing....."
+                sleep 3
+                echo "Integeration Testing Completed!"
+
+    Package:
+        needs: Integeration_tests
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Package 
+              run:
+                echo "Packaging...."
+                sleep 2
+                echo "Packaging Completed!"
+
+    Deploy:
+        needs: Package
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Deploy 
+              run:
+                echo "Deploying...."
+                sleep 1
+                echo "Deploying Completed!"
