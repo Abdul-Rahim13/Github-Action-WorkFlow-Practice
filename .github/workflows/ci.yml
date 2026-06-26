@@ -310,6 +310,20 @@
 
 #                2. github.ref
 
+# name: Actor Demo
+
+# on:
+#     workflow_dispatch:
+
+# jobs:
+#     demo:
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Print Actor
+#               run: 'echo "Actor: ${{ github.ref  }}"'
+
+
 name: Actor Demo
 
 on:
@@ -321,4 +335,4 @@ jobs:
 
         steps:
             - name: Print Actor
-              run: 'echo "Actor: ${{ github.ref  }}"'
+              run: 'echo "Actor: ${{ github.event_name   }}"'
