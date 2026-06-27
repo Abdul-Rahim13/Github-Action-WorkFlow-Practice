@@ -308,7 +308,7 @@
 #             - name: Print Actor
 #               run: 'echo "Actor: ${{ github.repository  }}"'
 
-#                2. github.ref
+#                3. github.ref
 
 # name: Actor Demo
 
@@ -323,8 +323,38 @@
 #             - name: Print Actor
 #               run: 'echo "Actor: ${{ github.ref  }}"'
 
+#                4. github.event_name
+# name: Actor Demo
 
-name: Actor Demo
+# on:
+#     workflow_dispatch:
+
+# jobs:
+#     demo:
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Print Actor
+#               run: 'echo "Actor: ${{ github.event_name }}"'
+
+
+#                5. github.runner.os
+# name: Actor Demo
+
+# on:
+#     workflow_dispatch:
+
+# jobs:
+#     demo:
+#         runs-on: ubuntu-latest
+
+#         steps:
+#             - name: Print Actor
+#               run: 'echo "Actor: ${{ github.runner.os }}"'
+
+# ------------------------------actions/checkout------------------------------
+
+name: Checkout Demo
 
 on:
     workflow_dispatch:
@@ -334,5 +364,8 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Print Actor
-              run: 'echo "Actor: ${{ github.event_name   }}"'
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Show Files
+              run: ls
