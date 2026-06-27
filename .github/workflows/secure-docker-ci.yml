@@ -1,0 +1,60 @@
+name: Docker Hub Secrets
+
+on: 
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+
+jobs:
+    docker:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Show Repository Information
+              run: |
+                echo "Current Directory:"
+                pwd
+                echo ""
+
+                echo "Runner OS: ${{ runner.os }}"
+                echo "Repository: ${{ github.repository }}"
+
+            - name: Verification
+              run: |
+               test -f my-devops-app/Dockerfile
+               test -f my-devops-app/package.json
+               test -f my-devops-app/README.md
+            
+            - name: Count
+              run: |
+               find . -name "*.html" | wc -l
+               find . -name "*.css" | wc -l
+               find . -name "*.js" | wc -l
+
+            - name: Image Build
+              run: |
+               docker build -t my-devops-app:latest ./my-devops-app
+               docker images
+               docker image inspect my-devops-app:latest
+
+            - name: Docker login
+              run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+
+            - name: Image Tag
+              run: docker tag my-devops-app:latest ${{secrets.DOCKER_USERNAME}}/my-devops-app:latest
+
+            - name: Push Docker Image
+              run: docker push ${{secrets.DOCKER_USERNAME}}/my-devops-app:latest
+            
+            - name: Pipeline Summary
+              run: |
+                echo "Docker image built successfully."
+                echo "Docker Hub login successful."
+                echo "Image tagged."
+                echo "Image pushed to Docker Hub."
+                echo "Pipeline completed successfully."
+
