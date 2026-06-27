@@ -576,7 +576,7 @@ jobs:
         run: docker --version
 
       - name: Build Docker image
-        run: docker build -t node-app .
+        run: docker build -t node-app ./my-devops-app
 
       - name: list Docker images
         run: docker images
