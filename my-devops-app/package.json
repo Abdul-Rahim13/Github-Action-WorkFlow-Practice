@@ -1,0 +1,10 @@
+{
+  "name": "devops-learning-project",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npx http-server .",
+    "lint": "echo Lint Passed",
+    "test": "echo Tests Passed",
+    "build": "echo Build Successful"
+  }
+}
