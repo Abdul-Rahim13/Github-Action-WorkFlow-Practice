@@ -371,13 +371,13 @@ jobs:
               run: ls
 
             - name: Check HTML File
-              run: test -f index.html
+              run: test -f my-portfolio/index.html
             
             - name: Check CSS File
-              run: test -f style.css
+              run: test -f my-portfolio/style.css
 
             - name: Check JS File
-              run: test -f script.js
+              run: test -f my-portfolio/script.js
 
             - name: Build Complete
               run: echo "Static website build successful!"
