@@ -409,148 +409,174 @@
 
 # ------------------------------CI Pipeline for a Static Web App------------------------------
 
-name: Frontend CI Pipeline
+# name: Frontend CI Pipeline
 
-on:
+# on:
+#   push:
+#     branches:
+#       - main
+
+#   pull_request:
+#     branches:
+#       - main
+
+#   workflow_dispatch:
+
+# jobs:
+#   validate:
+#     name: Validate Static Website
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v4
+
+#       - name: Show Repository Information
+#         run: |
+#           echo "Current Directory:"
+#           pwd
+#           echo ""
+
+#           echo "Current User:"
+#           whoami
+#           echo ""
+
+#           echo "Runner OS: ${{ runner.os }}"
+#           echo "Repository: ${{ github.repository }}"
+#           echo "Branch: ${{ github.ref_name }}"
+#           echo "Actor: ${{ github.actor }}"
+#           echo "Commit SHA: ${{ github.sha }}"
+
+#       - name: Show Project Structure
+#         run: ls -R
+
+#       - name: Verify Required Files
+#         run: |
+#           test -f activello/index.php
+#           test -f activello/style.css
+
+#       - name: Verify Required Directories
+#         run: |
+#           test -d activello/assets/js
+#           test -d activello/inc
+#           test -d activello/inc/welcome-screen/img
+
+#       - name: Verify Files Are Not Empty
+#         run: |
+#           test -s activello/index.php
+#           test -s activello/style.css
+
+#       - name: Count HTML Files
+#         run: |
+#           echo "HTML Files: $(find . -name '*.html' | wc -l)"
+
+#       - name: Count PHP Files
+#         run: |
+#           echo "PHP Files: $(find . -name '*.php' | wc -l)"
+
+#       - name: Count CSS Files
+#         run: |
+#           echo "CSS Files: $(find . -name '*.css' | wc -l)"
+
+#       - name: Count JavaScript Files
+#         run: |
+#           echo "JS Files: $(find . -name '*.js' | wc -l)"
+
+#       - name: Count Images
+#         run: |
+#           echo "Images: $(find . \( -name '*.png' -o -name '*.jpg' -o -name '*.jpeg' -o -name '*.gif' -o -name '*.svg' \) | wc -l)"
+
+#       - name: Count Total Files
+#         run: |
+#           echo "Total Files: $(find . -type f | wc -l)"
+
+#       - name: Show Date and Time
+#         run: date
+
+#       - name: Show Disk Usage
+#         run: df -h
+
+#       - name: Show Folder Size
+#         run: du -sh activello
+
+#       - name: Install HTMLHint
+#         run: npm install -g htmlhint
+
+#       - name: Validate HTML Files
+#         run: |
+#           find . -name "*.html" -exec htmlhint {} \;
+
+#       - name: Upload Website Artifact
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: website-build
+#           path: activello/
+
+#   security:
+#     name: Security Scan
+#     needs: validate
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v4
+
+#       - name: Search for Password
+#         run: grep -R "password" . || true
+
+#       - name: Search for Secret
+#         run: grep -R "secret" . || true
+
+#       - name: Search for Token
+#         run: grep -R "token" . || true
+
+#       - name: Search for API Key
+#         run: grep -R "apikey" . || true
+
+#       - name: Search for TODO
+#         run: grep -R "TODO" . || true
+
+#       - name: Search for FIXME
+#         run: grep -R "FIXME" . || true
+
+#   summary:
+#     name: Final Summary
+#     needs: [validate, security]
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Pipeline Summary
+#         run: |
+#           echo "===================================="
+#           echo "Pipeline Passed Successfully"
+#           echo "Website Ready For Deployment"
+#           echo "All Validation Checks Passed"
+#           echo "Security Scan Completed"
+#           echo "Artifact Uploaded Successfully"
+#           echo "===================================="
+
+# ------------------------------Docker CI------------------------------
+
+name: Docker CI
+
+on: 
   push:
     branches:
       - main
 
-  pull_request:
-    branches:
-      - main
-
-  workflow_dispatch:
-
 jobs:
-  validate:
-    name: Validate Static Website
+  docker:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Show Repository Information
-        run: |
-          echo "Current Directory:"
-          pwd
-          echo ""
+      - name: Verify Docker
+        run: docker --version
 
-          echo "Current User:"
-          whoami
-          echo ""
+      - name: Build Docker image
+        run: docker build -t node-app .
 
-          echo "Runner OS: ${{ runner.os }}"
-          echo "Repository: ${{ github.repository }}"
-          echo "Branch: ${{ github.ref_name }}"
-          echo "Actor: ${{ github.actor }}"
-          echo "Commit SHA: ${{ github.sha }}"
-
-      - name: Show Project Structure
-        run: ls -R
-
-      - name: Verify Required Files
-        run: |
-          test -f activello/index.php
-          test -f activello/style.css
-
-      - name: Verify Required Directories
-        run: |
-          test -d activello/assets/js
-          test -d activello/inc
-          test -d activello/inc/welcome-screen/img
-
-      - name: Verify Files Are Not Empty
-        run: |
-          test -s activello/index.php
-          test -s activello/style.css
-
-      - name: Count HTML Files
-        run: |
-          echo "HTML Files: $(find . -name '*.html' | wc -l)"
-
-      - name: Count PHP Files
-        run: |
-          echo "PHP Files: $(find . -name '*.php' | wc -l)"
-
-      - name: Count CSS Files
-        run: |
-          echo "CSS Files: $(find . -name '*.css' | wc -l)"
-
-      - name: Count JavaScript Files
-        run: |
-          echo "JS Files: $(find . -name '*.js' | wc -l)"
-
-      - name: Count Images
-        run: |
-          echo "Images: $(find . \( -name '*.png' -o -name '*.jpg' -o -name '*.jpeg' -o -name '*.gif' -o -name '*.svg' \) | wc -l)"
-
-      - name: Count Total Files
-        run: |
-          echo "Total Files: $(find . -type f | wc -l)"
-
-      - name: Show Date and Time
-        run: date
-
-      - name: Show Disk Usage
-        run: df -h
-
-      - name: Show Folder Size
-        run: du -sh activello
-
-      - name: Install HTMLHint
-        run: npm install -g htmlhint
-
-      - name: Validate HTML Files
-        run: |
-          find . -name "*.html" -exec htmlhint {} \;
-
-      - name: Upload Website Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: website-build
-          path: activello/
-
-  security:
-    name: Security Scan
-    needs: validate
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Search for Password
-        run: grep -R "password" . || true
-
-      - name: Search for Secret
-        run: grep -R "secret" . || true
-
-      - name: Search for Token
-        run: grep -R "token" . || true
-
-      - name: Search for API Key
-        run: grep -R "apikey" . || true
-
-      - name: Search for TODO
-        run: grep -R "TODO" . || true
-
-      - name: Search for FIXME
-        run: grep -R "FIXME" . || true
-
-  summary:
-    name: Final Summary
-    needs: [validate, security]
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Pipeline Summary
-        run: |
-          echo "===================================="
-          echo "Pipeline Passed Successfully"
-          echo "Website Ready For Deployment"
-          echo "All Validation Checks Passed"
-          echo "Security Scan Completed"
-          echo "Artifact Uploaded Successfully"
-          echo "===================================="
+      - name: list Docker images
+        run: docker images
