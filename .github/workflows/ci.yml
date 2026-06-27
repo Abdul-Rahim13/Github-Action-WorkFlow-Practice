@@ -595,6 +595,7 @@ jobs:
           echo "Commit SHA: ${{ github.sha }}"
 
   verify_Files:
+    needs: validate
     runs-on: ubuntu-latest
 
     steps:
@@ -603,14 +604,17 @@ jobs:
 
       - name: Verify Files
         run: |
-         echo test -f my-devops-app/Dockerfile
-         echo test -f my-devops-app/README.md
-         echo test -f my-devops-app/package.json
-         echo test -f my-devops-app/index.html
-         echo test -f my-devops-app/style.css
-         echo test -f my-devops-app/script.js
+         test -f my-devops-app/Dockerfile
+         test -f my-devops-app/README.md
+         test -f my-devops-app/package.json
+         test -f my-devops-app/index.html
+         test -f my-devops-app/style.css
+         test -f my-devops-app/script.js
 
   verify_Files_Size:
+    needs: 
+      - validate
+      - verify_Files
     runs-on: ubuntu-latest
 
     steps:
@@ -619,14 +623,18 @@ jobs:
 
       - name: Verify Files Size
         run: |
-         echo test -s my-devops-app/Dockerfile
-         echo test -s my-devops-app/README.md
-         echo test -s my-devops-app/package.json
-         echo test -s my-devops-app/index.html
-         echo test -s my-devops-app/style.css
-         echo test -s my-devops-app/script.js
+         test -s my-devops-app/Dockerfile
+         test -s my-devops-app/README.md
+         test -s my-devops-app/package.json
+         test -s my-devops-app/index.html
+         test -s my-devops-app/style.css
+         test -s my-devops-app/script.js
 
   count_resources:
+    needs: 
+      - validate
+      - verify_Files
+      - verify_Files_Size
     runs-on: ubuntu-latest
 
     steps:
@@ -635,80 +643,111 @@ jobs:
 
       - name: Count Resources
         run: |
-          echo find . -name "*.html" | wc -l
-          echo find . -name "*.js" | wc -l
-          echo find . -name "*.css" | wc -l
+         echo "HTML Files:"
+         find . -name "*.html" | wc -l
+
+         echo "CSS Files:"
+          find . -name "*.css" | wc -l
+
+         echo "JS Files:"
+          find . -name "*.js" | wc -l
   
   repo_structure:
+    needs: 
+      - validate
+      - verify_Files
+      - verify_Files_Size
+      - count_resources
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
       - name: Repository Structure
-        run: echo ls -la
+        run: ls -la
 
-  build:
+  docker:
+    needs: 
+      - validate
+      - verify_Files
+      - verify_Files_Size
+      - count_resources
+      - repo_structure
     runs-on: ubuntu-latest
 
     steps:
-      - name: Docker build image
-        run: docker build -t my-devops-app:latest .
+      - name: Checkout Repo
+        uses: actions/checkout@v4
 
-  docker_validation:
-    runs-on: ubuntu-latest
+      - name: Build Docker Image
+        run: 
+         docker build -t my-devops-app:latest ./my-devops-app
 
-    steps:
-      - name: Docker Validation
-        run: |
+      - name: Show Docker Image
+        run: 
          docker images
-         docker image inspect my-devops-app
 
-  Container:
-    runs-on: ubuntu-latest
+      - name: Inspect Docker Image
+        run: 
+         docker image inspect my-devops-app:latest
 
-    steps:
-      - name: Run Container
-        run: |
-         docker run -d --name my-container my-devops-app
+      - name: Run Docker Image & Container
+        run: 
+         docker run -d --name my-container my-devops-app:latest
+
+      - name: Show Docker contianers
+        run: 
          docker ps
 
-  Stop_Remove_Container:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Stop and Remove Container
-        run: |
+      - name: Stop Docker contianers
+        run: 
          docker stop my-container
+
+      - name: remove Docker contianers
+        run: 
          docker rm my-container
+
+      - name: show Docker remove contianers
+        run: 
          docker ps -a
 
   Final_Summary:
+    needs: 
+      - validate
+      - verify_Files
+      - verify_Files_Size
+      - count_resources
+      - repo_structure
+      - docker
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
       - name: Final Summary Of Project
-        run:
+        run: |
           echo "=========================================="
           echo "      TechNova Frontend CI Summary "
           echo "=========================================="
 
-          echo"      Repository Checked          ✅"
+          echo "      Repository Checked          ✅"
 
-          echo"      Required Files Verified     ✅"
+          echo "      Required Files Verified     ✅"
 
-          echo"      File Validation Passed      ✅"
+          echo "      File Validation Passed      ✅"
 
-          echo"      Repository Structure OK     ✅"
+          echo "      Repository Structure OK     ✅"
 
-          echo"      Docker Image Built          ✅"
+          echo "      Docker Image Built          ✅"
 
-          echo"      Docker Image Inspected      ✅"
+          echo "      Docker Image Inspected      ✅"
 
-          echo"      Container Started           ✅"
+          echo "      Container Started           ✅"
 
-          echo"      Container Stopped           ✅"
+          echo "      Container Stopped           ✅"
 
-          echo"      Pipeline Completed          ✅"
+          echo "      Pipeline Completed          ✅"
 
-          echo"=========================================="
+          echo "=========================================="
 
   
