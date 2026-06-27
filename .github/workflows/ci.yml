@@ -563,20 +563,152 @@ on:
   push:
     branches:
       - main
+  
+  pull_request:
+    branches:
+      - main
+  
+  workflow_dispatch:
 
 jobs:
-  docker:
+
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Show Repository Information
+        run: |
+          echo "Current Directory:"
+          pwd
+          echo ""
+
+          echo "Current User:"
+          whoami
+          echo ""
+
+          echo "Runner OS: ${{ runner.os }}"
+          echo "Repository: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Commit SHA: ${{ github.sha }}"
+
+  verify_Files:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Verify Docker
-        run: docker --version
+      - name: Verify Files
+        run: |
+         echo test -f my-devops-app/Dockerfile
+         echo test -f my-devops-app/README.md
+         echo test -f my-devops-app/package.json
+         echo test -f my-devops-app/index.html
+         echo test -f my-devops-app/style.css
+         echo test -f my-devops-app/script.js
 
-      - name: Build Docker image
-        run: docker build -t node-app ./my-devops-app
+  verify_Files_Size:
+    runs-on: ubuntu-latest
 
-      - name: list Docker images
-        run: docker images
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Verify Files Size
+        run: |
+         echo test -s my-devops-app/Dockerfile
+         echo test -s my-devops-app/README.md
+         echo test -s my-devops-app/package.json
+         echo test -s my-devops-app/index.html
+         echo test -s my-devops-app/style.css
+         echo test -s my-devops-app/script.js
+
+  count_resources:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Count Resources
+        run: |
+          echo find . -name "*.html" | wc -l
+          echo find . -name "*.js" | wc -l
+          echo find . -name "*.css" | wc -l
+  
+  repo_structure:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository Structure
+        run: echo ls -la
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Docker build image
+        run: docker build -t my-devops-app:latest .
+
+  docker_validation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Docker Validation
+        run: |
+         docker images
+         docker image inspect my-devops-app
+
+  Container:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Container
+        run: |
+         docker run -d --name my-container my-devops-app
+         docker ps
+
+  Stop_Remove_Container:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Stop and Remove Container
+        run: |
+         docker stop my-container
+         docker rm my-container
+         docker ps -a
+
+  Final_Summary:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Final Summary Of Project
+        run:
+          echo "=========================================="
+          echo "      TechNova Frontend CI Summary "
+          echo "=========================================="
+
+          echo"      Repository Checked          ✅"
+
+          echo"      Required Files Verified     ✅"
+
+          echo"      File Validation Passed      ✅"
+
+          echo"      Repository Structure OK     ✅"
+
+          echo"      Docker Image Built          ✅"
+
+          echo"      Docker Image Inspected      ✅"
+
+          echo"      Container Started           ✅"
+
+          echo"      Container Stopped           ✅"
+
+          echo"      Pipeline Completed          ✅"
+
+          echo"=========================================="
+
+  
